@@ -1,0 +1,121 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+
+<!-- start header-->
+
+<header>
+  <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/admin"> <img src="{{url_for('static', filename='images/logo_menu_plasc.png')}}"
+            width="100px"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/admin">Produtos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/marcas">Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/categoria">Segmentos</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Adicionar
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a class="dropdown-item" href="/addmarca">Cliente</a></li>
+                <li><a class="dropdown-item" href="/addcat">Segmento</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="/addproduto">Produto</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Pesquisar</button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- end header-->
+
+
+<div class="text-center">{% include '_messages.html'  %}</div>
+
+
+<div class="container-fluid mt-3">
+  <table class="table table-sm table-striped">
+    <thead class="text-center">
+      <th>ID</th>
+      <th>Nome do Produto</th>
+      <th>OP</th>
+      <th>Código do Produto</th>
+      <th>Cliente</th>
+      <th>Editar</th>
+      <th>Deletar</th>
+    </thead>
+
+    <tbody>
+      {% for produto in produtos %}
+      <tr class="text-center">
+        <td>{{loop.index}}</td>
+        <td>{{produto.name}}</td>
+        <td>{{produto.op}}</td>
+        <td>{{produto.codigo}}</td>
+        <td>{{produto.marca.name}}</td>
+        <td><a href="{{url_for('updateproduto', id=produto.id)}}" class="btn btn-outline-success btn-sm mt-2">Editar</a>
+        </td>
+        <td>
+          <button type="button" class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal"
+            data-bs-target="#exampleModal-{{produto.id}}">
+            Deletar
+          </button>
+        </td>
+      </tr>
+
+      <div class="modal fade" id="exampleModal-{{produto.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">{{produto.name}}</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <span class="text-danger">Deseja mesmo deletar este Produto {{produto.name}}?</span>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <form action="{{url_for('deleteproduto', id=produto.id)}}" method="POST">
+                <button type="submit" class="btn btn-danger">Deletar</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+
+    </tbody>
+
+  </table>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container-1 {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-page {
+  width: 400px;
+  height: 350px;
+  padding: 10px;
+}
+
+.regist-page {
+  border-radius: 60px;
+  width: 400px;
+  height: 500px;
+  padding: 10px;
+}
+
+.btn-main {
+  text-align: center;
+}
+
+.btn-color {
+  background-color: rgba(87, 36, 0, 0.926);
+  color: cornsilk;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.bg-form-registrar {
+  height: 100vh;
+  display: flexbox;
+}
+
+.bg-form-login {
+  background-position: center;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 320px) {
+  #form h3 {
+    font-size: 2rem;
+  }
+}

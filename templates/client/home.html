@@ -1,0 +1,56 @@
+{% extends 'layout_home.html' %}
+
+{% block content %}
+
+{% include '_messages.html'  %}
+
+<body>
+
+    <!-- header section starts  -->
+
+    <header class="header">
+
+        <a href="/" class="logo">
+            <img src="{{url_for('static', filename='images/logo_menu_plasc.png')}}">
+        </a>
+        <div class="text-center">{% include '_messages.html'  %}</div>
+    </header>
+
+    <div class="text-center">{% include '_messages.html'  %}</div>
+
+    <!-- header section ends -->
+
+    <section class="bg-adm">
+        <div class="section-1">
+            <h2>Sistema de Gestão de Qualidade Plasc</h2>
+            <p>Selecione um card abaixo para acessar o serviço que deseja utilizar</p>
+        </div>
+
+        <div class="section-card">
+            <a href="/marcas">
+                <div class="button-27">
+                    <p>CLIENTES CADASTRADOS</p>
+                </div>
+            </a>
+            <a href="/categoria">
+                <div class="button-27">
+                    <p>ITPS</p>
+                </div>
+            </a>
+
+            <a href="/admin">
+                <div class="button-27">
+                    <p>PRODUTOS CADASTRADOS</p>
+                </div>
+            </a>
+
+            <a href="/">
+                <div class="button-27">
+                    <p>NÃO CONFORMIDADES</p>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    {% endblock content %}

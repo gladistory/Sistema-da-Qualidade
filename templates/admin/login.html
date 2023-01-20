@@ -1,0 +1,29 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+<div class="bg-form-login">
+  {% from "_forms_ajuda.html" import render_field %}
+  <div class="container-1">
+    <div class="login-page efeito-vidro">
+
+      <h1 class="text-center">Login</h1>
+      {% include '_messages.html' %}
+
+      <form method="post" enctype="multipart/form-data">
+        <div>
+          {{ render_field(form.email, class="form-control") }}
+          {{ render_field(form.password, class="form-control") }}
+        </div>
+        <p class="btn-main">
+          <input type="submit" value="Login" class="btn btn-color mt-3" />
+        </p>
+      </form>
+      <p class="text-center">
+        Não possuí uma conta ?<a href="/registrar"> Registrar</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

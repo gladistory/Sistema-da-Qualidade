@@ -1,0 +1,25 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+<main>
+  <div class="container-1 bg-form-registrar">
+    {% include '_messages.html'  %}
+    {% from "_forms_ajuda.html" import render_field %}
+    <div class="regist-page efeito-vidro">
+      <div class="text-center h1">Registrar</div>
+      <form method=post enctype="multipart/form-data">
+        <div>
+          {{ render_field(form.name, class="form-control") }}
+          {{ render_field(form.username, class="form-control") }}
+          {{ render_field(form.email, class="form-control") }}
+          {{ render_field(form.password, class="form-control") }}
+          {{ render_field(form.confirm, class="form-control") }}
+        </div>
+        <p class="btn-main"><input type=submit value=Registrar class="btn btn-color"></p>
+      </form>
+      <p class="text-center">Já possuí uma conta ?<a href="/login"> Login</a></p>
+    </div>
+  </div>
+</main>
+{% endblock content %}
