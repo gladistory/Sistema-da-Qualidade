@@ -2,66 +2,11 @@
 
 {% block content %}
 
-
-<!-- start header-->
-
-<header>
-  <div class="container-fluid">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/admin"> <img src="{{url_for('static', filename='images/logo_menu_plasc.png')}}"
-            width="100px"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/admin">Produtos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/marcas">Clientes</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/categoria">Segmentos</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Adicionar
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li><a class="dropdown-item" href="/addmarca">Cliente</a></li>
-                <li><a class="dropdown-item" href="/addcat">Segmento</a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="/addproduto">Produto</a></li>
-              </ul>
-            </li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Pesquisar</button>
-          </form>
-        </div>
-      </div>
-    </nav>
-  </div>
-</header>
-
-<!-- end header-->
-
-
 <div class="text-center">{% include '_messages.html'  %}</div>
 
 
 <div class="container-fluid mt-3">
-  <table class="table table-sm table-striped">
+  <table class="table table-striped">
     <thead class="text-center">
       <th>ID</th>
       <th>Nome do Produto</th>
@@ -114,8 +59,37 @@
       {% endfor %}
 
     </tbody>
-
   </table>
+
+  {% for produto in produtos %}
+  <div class="card mt-4 ">
+    <div class="card-header">
+      {{produto.marca.name}}
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{produto.name}}</h5>
+      <p class="card-text">{{produto.discription}}</p>
+      <a href="{{url_for('updateproduto', id=produto.id)}}" class="btn btn-success btn-md mt-2">Editar
+        Descrição</a>
+    </div>
+  </div>
+  {% endfor %}
+
 </div>
+
+<nav class="nav justify-content-center m-4">
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="/admin">Produtos</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/marcas">Clientes</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/categoria">Segmentos</a>
+  </li>
+</nav>
 
 {% endblock content %}

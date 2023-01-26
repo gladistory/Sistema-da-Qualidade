@@ -1,0 +1,53 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+<div class="container-fluid mt-3">
+    <table class="table table-striped">
+        <thead class="text-center">
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Deletar</th>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+            <tr class="text-center">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal-{{user.id}}">
+                        Deletar
+                    </button>
+                </td>
+            </tr>
+
+            <div class="modal fade" id="exampleModal-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{user.name}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="text-danger">Deseja mesmo deletar o usuário {{user.name}}?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form action="{{url_for('deleteuser', id=user.id)}}" method="POST">
+                                <button type="submit" class="btn btn-danger">Deletar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+            {% endblock content %}

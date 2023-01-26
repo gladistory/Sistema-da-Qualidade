@@ -12,26 +12,24 @@
 }
 
 .login-page {
-  width: 400px;
+  width: 350px;
   height: 350px;
   padding: 10px;
+  background-color: #0087c56f;
+  border-radius: 3%;
 }
 
 .regist-page {
   border-radius: 60px;
   width: 400px;
-  height: 500px;
+  height: 525px;
   padding: 10px;
+  background-color: #00c5076f;
+  border-radius: 3%;
 }
 
 .btn-main {
   text-align: center;
-}
-
-.btn-color {
-  background-color: rgba(87, 36, 0, 0.926);
-  color: cornsilk;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .bg-form-registrar {
@@ -40,14 +38,28 @@
 }
 
 .bg-form-login {
+  height: 100vh;
   background-position: center;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
 }
 
-@media (max-width: 320px) {
-  #form h3 {
-    font-size: 2rem;
-  }
+.bg-form-marcas-clientes {
+  color: #fff;
+  width: 400px;
+  height: 400px;
+  padding: 10px;
+  background-color: #0000c573;
+  border-radius: 3%;
+}
+
+.bg-form-produto {
+  margin: 50px;
+  color: #fff;
+  width: 600px;
+  height: 650px;
+  padding: 10px;
+  background-color: #6060609a;
+  border-radius: 3%;
 }

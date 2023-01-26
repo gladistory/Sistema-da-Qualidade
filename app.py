@@ -30,7 +30,6 @@ class User(db.Model):
     password = db.Column(db.String(180), unique=False, nullable=False)
     profile = db.Column(db.String(80), unique=False, nullable=False, default='profile.jpg')
 
-
     def __repr__(self):
         return '<User %r>' % self.username
 
@@ -75,11 +74,32 @@ def upload_file():
         return redirect(request.args.get('next') or url_for('admin'))
     return render_template('admin/upload.html', form=form)
 
+@app.route('/users', methods=['GET'])
+def users():
+    if 'email' not in session:
+        flash(f'Por favor, é necessario que faça seu login no sistema', 'danger')
+        return redirect(url_for('login'))
+    users = User.query.all()
+    return render_template('admin/users.html', title='Usuários Cadastrados', users=users)
+
+
+
+@app.route('/deleteuser/<int:id>', methods=['GET', 'POST'])
+def deleteuser(id):
+    users = User.query.get_or_404(id)
+    if request.method=='POST':
+        db.session.delete(users)
+        db.session.commit()
+        flash(f'Sua MARCA {users.name} FOI DELETADA com sucesso!', 'success')
+        return redirect(url_for('users'))
+    flash(f'Sua MARCA {users.name} NÂO FOI DELETADA', 'warning')
+    return redirect(url_for('users'))
+
 
 @app.route('/')
 @app.route("/home")
 def home():
-    return render_template('client/home.html', title='Sistema de Qualidade Plasc')
+    return render_template('client/home.html', title='Sistema de Controle de Qualidade')
 
 @app.route('/admin')
 def admin():
@@ -92,6 +112,9 @@ def admin():
 @app.route('/registrar', methods=['GET', 'POST'])
 def registrar():
     form = RegistrationForm(request.form)
+    if 'email' not in session:
+        flash(f'Por favor, é necessario que faça seu login no sistema', 'danger')
+        return redirect(url_for('login'))
     if request.method == 'POST' and form.validate():
         hash_password = bcrypt.generate_password_hash(form.password.data)
         user = User(name=form.name.data, username=form.username.data , email=form.email.data,
