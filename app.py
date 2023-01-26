@@ -59,29 +59,20 @@ class Categoria(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(30), nullable=False, unique=True)
     
-class UploadFileForm(FlaskForm):
-    file = FileField("File", validators=[InputRequired()])
-    submit = SubmitField("Upload File")
 
+class UploadFiles(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.Text(30), nullable=False, unique=True)
+    link=db.Column(db.Text, nullable=False)
 
-@app.route('/upload', methods=['GET', 'POST'])
-def upload_file():
-    form = UploadFileForm()
-    if form.validate_on_submit():
-        file = form.file.data # First grab the file
-        file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename))) # Then save the file
-        flash(f'Upload feito com sucesso', 'success')
-        return redirect(request.args.get('next') or url_for('admin'))
-    return render_template('admin/upload.html', form=form)
-
-@app.route('/users', methods=['GET'])
+    
+@app.route('/users', methods=['GET', 'POST'])
 def users():
     if 'email' not in session:
         flash(f'Por favor, é necessario que faça seu login no sistema', 'danger')
         return redirect(url_for('login'))
     users = User.query.all()
     return render_template('admin/users.html', title='Usuários Cadastrados', users=users)
-
 
 
 @app.route('/deleteuser/<int:id>', methods=['GET', 'POST'])
