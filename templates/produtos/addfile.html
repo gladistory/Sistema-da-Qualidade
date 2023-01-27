@@ -1,0 +1,31 @@
+{% extends 'layouts.html' %}
+
+{% block content %}
+
+<div class="text-center">{% include '_messages.html' %}</div>
+
+<div class="container-fluid bg-produtos">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 p-2">
+            <h2 class="text-center p-2">ADICIONAR ARQUIVOS</h2>
+            {% from "_forms_ajuda.html" import render_field %}
+            <form action="" method="POST" enctype="multipart/form-data">
+
+                {{ render_field(form.name, class="form-control", placeholder="Nome do Arquivo") }}
+
+                {{ render_field(form.link, class="form-control", placeholder="link do drive", rows="4") }}
+
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-success">Cadastrar</button>
+                    <a href="/admin" class="btn btn-danger" style="margin-left: 25px;">Cancelar</a>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+{% endblock content %}

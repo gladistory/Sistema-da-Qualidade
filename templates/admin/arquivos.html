@@ -1,0 +1,65 @@
+{% extends "layouts.html" %}
+
+{% block content %}
+
+<div class="text-center">{% include '_messages.html'  %}</div>
+
+
+<div class="container-fluid mt-3">
+    <table class="table table-striped">
+        <thead class="text-center">
+            <th>ID</th>
+            <th>Nome do Arquivo</th>
+            <th>Baixar</th>
+        </thead>
+
+        <tbody>
+            {% for arquivo in arquivos %}
+            <tr class="text-center">
+                <td>{{loop.index}}</td>
+                <td>{{arquivo.name}}</td>
+                <td><a href="{{arquivo.link}}"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                            class="bi bi-file-earmark-arrow-down" viewBox="0 0 16 16">
+                            <path
+                                d="M8.5 6.5a.5.5 0 0 0-1 0v3.793L6.354 9.146a.5.5 0 1 0-.708.708l2 2a.5.5 0 0 0 .708 0l2-2a.5.5 0 0 0-.708-.708L8.5 10.293V6.5z" />
+                            <path
+                                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5v2z" />
+                        </svg></a></td>
+
+                <td>
+                    <button type="button" class="btn btn-sm btn-outline-danger mt-2" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal-{{arquivo.id}}">
+                        Deletar
+                    </button>
+                </td>
+            </tr>
+
+            <div class="modal fade" id="exampleModal-{{arquivo.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">{{arquivo.name}}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <span class="text-danger">Deseja mesmo deletar o {{arquivo.name}}?</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form action="{{url_for('deletearquivo', id=arquivo.id)}}" method="POST">
+                                <button type="submit" class="btn btn-danger">Deletar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

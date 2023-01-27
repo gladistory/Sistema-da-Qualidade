@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from login.forms import RegistrationForm, LoginFormulario
 from datetime import datetime
-from produtos.forms import Addprodutos
+from produtos.forms import Addprodutos, Addfiles
 import os
 from flask import Flask, flash, request, redirect, url_for
 from werkzeug.utils import secure_filename
@@ -49,6 +49,14 @@ class Addproduto(db.Model):
 
     def __repr__(self):
         return '<Addproduto %r>' % self.name
+    
+class Addfile(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(80), nullable=False)
+    link=db.Column(db.Text, nullable=False)
+    
+    def __repr__(self):
+        return '<Addfile %r>' % self.name
 
 class Marca(db.Model):
     id=db.Column(db.Integer, primary_key=True)
@@ -59,11 +67,6 @@ class Categoria(db.Model):
     id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(30), nullable=False, unique=True)
     
-
-class UploadFiles(db.Model):
-    id=db.Column(db.Integer, primary_key=True)
-    name=db.Column(db.Text(30), nullable=False, unique=True)
-    link=db.Column(db.Text, nullable=False)
 
     
 @app.route('/users', methods=['GET', 'POST'])
@@ -254,7 +257,47 @@ def addproduto():
         return redirect(url_for('admin'))
     
     return render_template('/produtos/addprodutos.html', title="Cadastrar Produtos", form=form, marcas=marcas, categorias=categorias)
+ 
+ 
+@app.route('/addfile', methods=['GET', 'POST'])
+def addfile():
+    if 'email' not in session:
+        flash(f'Por favor, é necessario que faça seu login no sistema', 'danger')
+        return redirect(url_for('login')) 
+
+    form = Addfiles(request.form)
     
+    if request.method=="POST":
+        name = form.name.data
+        link = form.link.data
+        
+        addfiles =  Addfile(name=name, link=link)
+        db.session.add(addfiles)
+        flash(f'O Arquivo {name} foi cadastrado com sucesso', 'success')
+        db.session.commit()
+        return redirect(url_for('addfile'))
+    
+    return render_template('/produtos/addfile.html', title="Cadastrar Produtos", form=form)
+
+@app.route('/arquivos')
+def arquivos():
+    if 'email' not in session:
+        flash(f'Por favor, é necessario que faça seu login no sistema', 'danger')
+        return redirect(url_for('login'))
+    arquivos = Addfile.query.all()
+    return render_template('admin/arquivos.html', title='Página do Administrador',  arquivos=arquivos)
+
+@app.route('/deletearquivo/<int:id>', methods=['POST'])
+def deletearquivo(id):
+    arquivo = Addfile.query.get_or_404(id)
+    if request.method=='POST':
+        db.session.delete(arquivo)
+        db.session.commit()
+        flash(f'Seu Produto {arquivo.name} FOI DELETADA com sucesso!', 'success')
+        return redirect(url_for('admin'))
+    flash(f'Seu Produto {arquivo.name} NÃO FOI DELETADA !', 'warning')
+    return redirect(url_for('arquivos')) 
+
 @app.route('/updateproduto/<int:id>', methods=['GET', 'POST'])
 def updateproduto(id):
     marcas = Marca.query.all()
