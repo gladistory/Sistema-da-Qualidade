@@ -1,6 +1,6 @@
 # Projeto Sistema da Qualidade - Framework Flask
 
-Projeto de desenvolvimento de sitema da Qualidade de um empresa embalagens flexíveis.
+Projeto de desenvolvimento de sitema da Qualidade de uma empresa de embalagens flexíveis.
 O Sistema atualmente contém as seguintes funcionalidades:
 - área de adminstrador;
 - Tela de login;
