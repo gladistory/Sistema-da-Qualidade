@@ -10,9 +10,6 @@ O Sistema atualmente contém as seguintes funcionalidades:
 - Página adicionar arquivos por link do google drive;
 - Possibilidade de criar, editar e deletar produtos, clientes, segmentos, administradores e arquivos.
 
-Teste Área do administrador: https://sistema-plasc.onrender.com/
-- EMAIL: admin@gmail.com
-- SENHA: 123456
 
 ## Página inicial - Pré-Login
 ![image](https://github.com/gladistory/backup_plasc/assets/69911251/f94c9373-aee0-498b-9250-a31394ab59c7)
